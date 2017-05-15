@@ -1,2 +1,2 @@
-# cartoview_categorized_styler
-WMS categorized thematic styler for cartoview
+# Cartoview Categorized Styler
+Create categorized thematic styles for WMS layers with cartoview
