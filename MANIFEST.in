@@ -1,0 +1,8 @@
+include __init__.py
+include installer.py
+include models.py
+include settings.py
+include urls.py
+include views.py
+recursive-include static/cartoview_categorized_styler *
+recursive-include templates *
