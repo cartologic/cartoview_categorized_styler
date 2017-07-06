@@ -14,7 +14,8 @@ from geoserver.catalog import Catalog
 @login_required
 def index(request):
     context = {
-        "v": __version__
+        "v": __version__,
+        "APP_NAME": APP_NAME
     }
     return render(request, "%s/index.html" % APP_NAME, context)
 
