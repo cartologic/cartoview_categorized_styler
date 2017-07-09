@@ -1,18 +1,22 @@
-{% extends "app_manager/app_install_base.html" %}
+{% extends "app_instance/apps_configuration_base.html" %}
 {% load bootstrap_tags staticfiles %}
 {% load i18n %}
 
-{% block title %} {{APP_NAME}} {% endblock %}
+{% block title %} Categorized Styler {% endblock %}
 
 
 {% block head %}
-    {% include "geonode/ext_header.html" %}
-    {{ block.super }}
+  {% include "geonode/ext_header.html" %}
+  {{ block.super }}
+  <style>
+    #wrap{
+      background-color: #f3f3f3;
+    }
+  </style>
 {% endblock %}
 
 
-{% block body %}
-  <br>
+{% block app_configuration %}
   <br>
   <div class="container">
       <div class="row" id="styler-ct"></div>
