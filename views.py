@@ -15,7 +15,8 @@ from geoserver.catalog import Catalog
 def index(request):
     context = {
         "v": __version__,
-        "APP_NAME": APP_NAME
+        "APP_NAME": APP_NAME,
+        'username': request.user,
     }
     return render(request, "%s/index.html" % APP_NAME, context)
 

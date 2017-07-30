@@ -59,12 +59,13 @@
     };
     const CSRF_TOKEN = getCookie('csrftoken');
     const APP_NAME = "{{APP_NAME}}"
+    const username = '{{username}}'
   </script>
 
   <script src="{{ STATIC_URL }}cartoview_categorized_styler/ol.js"></script>
   <script src="{{ STATIC_URL }}cartoview_categorized_styler/OpenLayers.js"></script>
   <!--<script src="{{ STATIC_URL }}cartoview_react_styler/dist/categorized-styler.bundle.js?v={{v}}"></script>-->
-  <script src="{{ STATIC_URL }}cartoview_categorized_styler/categorized-styler.bundle.min.js?v={{v}}"></script>
+   <script src="{{ STATIC_URL }}cartoview_categorized_styler/categorized-styler.bundle.min.js?v={{v}}"></script>
 
   <script type="text/javascript">
     var styler = React.createElement(Styler);
