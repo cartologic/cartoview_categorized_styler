@@ -1,12 +1,12 @@
 import { NextButton, PreviousButton } from './CommonComponents'
 
 import { Component } from 'react'
-import WMSClient from "../gs-client/WMSClient.jsx"
 import t from 'tcomb-form'
 
+const alphaNumericRegex = /^[0-9a-zA-Z]+$/
 const Form = t.form.Form
 const AlphaNumeric = t.refinement(t.String, (n) => {
-  if (n.match(/^[0-9a-z]+$/)) {
+  if (n.match(alphaNumericRegex)) {
     return true
   } else {
     return false
@@ -15,7 +15,7 @@ const AlphaNumeric = t.refinement(t.String, (n) => {
 AlphaNumeric.getValidationErrorMessage = (value) => {
   if (!value) {
     return 'Required'
-  } else if (!value.match(/^[0-9a-z]+$/)) {
+  } else if (!value.match(alphaNumericRegex)) {
     return 'Only AlphaNumeric Allowed'
   }
 }
