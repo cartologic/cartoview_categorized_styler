@@ -1,74 +1,61 @@
 {% extends "app_manager/app_install_base.html" %}
 <!-- {% extends "app_instance/apps_configuration_base.html"  -->
-{% load bootstrap_tags staticfiles %}
-{% load i18n %}
-
-{% block title %} Categorized Styler {% endblock %}
-
-
-{% block head %}
-  {% include "geonode/ext_header.html" %}
-  {{ block.super }}
-  <style>
-    #wrap{
-      background-color: #f3f3f3;
-    }
-  </style>
-{% endblock %}
-
-
-{% block body %}
+{% load bootstrap_tags staticfiles %} {% load i18n %} {% block title %} Categorized Styler {% endblock %} {% block head %}
+{% include "geonode/ext_header.html" %} {{ block.super }}
+<style>
+  #wrap {
+    background-color: #f3f3f3;
+  }
+</style>
+{% endblock %} {% block body %}
 <!-- {% block app_configuration -->
-  <br>
-  <div class="container">
-      <div class="row" id="styler-ct"></div>
-  </div>
-  <br>
-  <br>
-{% endblock %}
-
-
-{% block extra_script %}
-  <script type="text/javascript">
-    function getCookie(name) {
-      var cookieValue = null;
-      if (document.cookie && document.cookie !== '') {
-        var cookies = document.cookie.split(';');
-        for (var i = 0; i < cookies.length; i++) {
-          var cookie = cookies[i].trim();
-          // Does this cookie string begin with the name we want?
-          if (cookie.substring(0, name.length + 1) === (name + '=')) {
-            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-            break;
-          }
+<br>
+<div class="container">
+  <div class="row" id="styler-ct"></div>
+</div>
+<br>
+<br> {% endblock %} {% block extra_script %}
+<script type="text/javascript">
+  function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+      var cookies = document.cookie.split(';');
+      for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i].trim();
+        // Does this cookie string begin with the name we want?
+        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
         }
       }
-      return cookieValue;
     }
-    const URLS = {
-      geoserver: "{{ GEOSERVER_BASE_URL }}",
-      geoserverRestProxy:"proxy/geoserver/rest",
-      stylesUrl: "{% url 'cartoview_categorized_styler.index' %}styles",
-      //{% if PROXY_URL %}
-      proxy: "{{ PROXY_URL }}",
-      //{% endif %}
-      static: "{{ STATIC_URL }}",
-      media: "{{ MEDIA_URL }}",
-      rest: "{% url 'app_manager_base_url' %}rest/app_manager/",
-      geonodeRest: "{% url 'api_api_top_level' 'api' %}"
-    };
-    const CSRF_TOKEN = getCookie('csrftoken');
-    const APP_NAME = "{{APP_NAME}}"
-    const username = '{{username}}'
-  </script>
+    return cookieValue;
+  }
+  const URLS = {
+    geoserver: "{{ GEOSERVER_BASE_URL }}",
+    geoserverRestProxy: "proxy/geoserver/rest",
+    stylesUrl: "{% url 'cartoview_categorized_styler.index' %}styles",
+    //{% if PROXY_URL %}
+    proxy: "{{ PROXY_URL }}",
+    //{% endif %}
+    static: "{{ STATIC_URL }}",
+    media: "{{ MEDIA_URL }}",
+    rest: "{% url 'app_manager_base_url' %}rest/app_manager/",
+    geonodeRest: "{% url 'api_api_top_level' 'api' %}"
+  };
+  const CSRF_TOKEN = getCookie('csrftoken');
+  const APP_NAME = "{{APP_NAME}}"
+  const username = '{{username}}'
+</script>
 
-  <script src="{{ STATIC_URL }}cartoview_categorized_styler/ol.js"></script>
-  <script src="{{ STATIC_URL }}cartoview_categorized_styler/OpenLayers.js"></script>
-  <!--<script src="{{ STATIC_URL }}cartoview_react_styler/dist/categorized-styler.bundle.js?v={{v}}"></script>-->
-   <script src="{{ STATIC_URL }}cartoview_categorized_styler/categorized-styler.bundle.min.js?v={{v}}"></script>
+<script src="{{ STATIC_URL }}cartoview_categorized_styler/ol.js"></script>
+<script src="{{ STATIC_URL }}cartoview_categorized_styler/OpenLayers.js"></script>
+<script src="{{ STATIC_URL }}cartoview_categorized_styler/dist/commons.js?v={{v}}"></script>
+<script src="{{ STATIC_URL }}cartoview_categorized_styler/dist/CategoriezedStyler.bundle.js?v={{v}}"></script>
+<!-- <script src="{{ STATIC_URL }}cartoview_categorized_styler/categorized-styler.bundle.min.js?v={{v}}"></script> -->
 
-  <script type="text/javascript">
-    var styler = React.createElement(Styler);
-    ReactDOM.render(styler, document.getElementById("styler-ct"));
-  </script>
+<script type="text/javascript">
+  var styler = React.createElement(Styler);
+  ReactDOM.render(styler, document.getElementById("styler-ct"));
+</script>
 {% endblock %}
