@@ -95,7 +95,6 @@ if ( production ) {
             minRatio: 0
         } ),
     new webpack.HashedModuleIdsPlugin(),
-    new BundleAnalyzerPlugin()
   ]
     Array.prototype.push.apply( plugins, prodPlugins )
 } else {

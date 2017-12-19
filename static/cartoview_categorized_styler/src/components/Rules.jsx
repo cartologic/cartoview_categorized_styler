@@ -2,14 +2,12 @@ import { ListGroup, ListGroupItem } from 'reactstrap';
 import React, { Component } from 'react';
 
 import LegendItem from "./Legend/LegendItem.jsx";
-
 class Rule extends Component {
     state = { editing: false }
-    
-    getRuleTitle=()=>{
-        const {rule}=this.props
-        console.log(rule.title)
-        let title= typeof(rule.title)==="undefined" || rule.title===null ? "No Value(null)": rule.title===""? "Empty" : rule.title
+    getRuleTitle = () => {
+        const { rule } = this.props
+        let title = typeof ( rule.title ) === "undefined" || rule.title ===
+            null ? "No Value(null)" : rule.title === "" ? "Empty" : rule.title
         return title
     }
     render() {
