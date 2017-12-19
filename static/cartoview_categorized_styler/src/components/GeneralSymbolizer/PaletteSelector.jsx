@@ -19,12 +19,9 @@ export default class PaletteSelector extends Component {
         return (
             <div className="dropdown">
                 <button className="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    {
-                        palette && CartoColor[palette] && CartoColor[palette][count]
-                        && preview(CartoColor[palette][count])
-                    } <span className="caret"></span>
+                    {palette && CartoColor[palette] && CartoColor[palette][count] && preview(CartoColor[palette][count])} <span className="caret"></span>
                 </button>
-                <ul className="dropdown-menu" aria-labelledby="dropdownMenu1" style={{ textAlign: "center" }}>
+                <ul className="dropdown-menu palette-menu" aria-labelledby="dropdownMenu1" style={{ textAlign: "center" }}>
                     {
                         Object.keys(CartoColor).map((key) => {
                             if (CartoColor[key][count])

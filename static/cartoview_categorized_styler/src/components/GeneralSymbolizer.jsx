@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import LineSymbolizer from "./GeneralSymbolizer/LineSymbolizer.jsx"
 import PointSymbolizer from "./GeneralSymbolizer/PointSymbolizer.jsx"
 import PolygonSymbolizer from "./GeneralSymbolizer/PolygonSymbolizer.jsx"
+
 export default class GeneralSymbolizer extends Component {
     state = {}
     renderHeader() {

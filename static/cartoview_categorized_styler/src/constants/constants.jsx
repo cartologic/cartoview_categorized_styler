@@ -26,11 +26,11 @@ const MAX_SIZE = 11;
 const DefaultModalStyle = {
     overlay: {
         position: 'fixed',
-        top: 80,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        // backgroundColor: 'rgba(255,255,255,0.20)',
+        top: '3.5em',
+        left: '0px',
+        right: '0px',
+        bottom: '0px',
+        backgroundColor: 'rgba(101, 100, 100, 0.75)',
         zIndex: 999
     },
     content: {

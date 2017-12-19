@@ -9,7 +9,7 @@ import React, { Component } from 'react'
 
 import AttributeSelector from './components/AttributeSelector.jsx'
 import CustomStyle from './components/CustomStyle.jsx'
-import {ErrorModal} from './components/CommonComponents'
+import { ErrorModal } from './components/CommonComponents'
 import GeneralSymbolizer from './components/GeneralSymbolizer.jsx'
 import LayerStyles from './components/LayerStyles.jsx'
 import LayersList from './components/LayersList.jsx'
@@ -93,26 +93,16 @@ class Styler extends Component {
     }
     navBar() {
         return (
-            <nav className="navbar navbar-default">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-xs-6 col-md-6">
-                            <h4 style={{
-                                color: "dimgray"
-                            }}>Categorized Styler</h4>
-                        </div>
-                        <div className="col-xs-1 col-md-1 col-md-offset-5 col-xs-offset-4">
-                            <button type="button" style={{
-                                marginTop: "8%"
-                            }} className="btn btn-primary" onClick={() => {
-                                this.setState({ modalIsOpen: true })
-                            }}>
-                                ?
-              </button>
-                        </div>
-                    </div>
-                </div>
-            </nav>
+            <div className="flex-element styler-nav">
+                <h4>{"Categorized Styler"}</h4>
+                <div className="fill-empty"></div>
+                <button type="button" className="btn btn-primary" onClick={() => {
+                    this.setState({ modalIsOpen: true })
+                }}>
+                    {"?"}
+                </button>
+
+            </div>
         )
     }
     render() {
@@ -165,7 +155,6 @@ class Styler extends Component {
                             selectedAttrIndex: index
                         })
                         const { layerName } = this.state.config
-
                         WPSClient.gsUnique(layerName, attribute)
                             .then(res => {
                                 WMSClient.getLayerType(
@@ -178,8 +167,10 @@ class Styler extends Component {
                                                 .length,
                                             11)
                                     }, true))
-                            }).catch(err => this.setState({error:true,errorMessage:"it seems that this attribute has no values please go back and select another one"}))
-
+                            }).catch(err => this.setState({
+                                error: true,
+                                errorMessage: "it seems that this attribute has no values please go back and select another one"
+                            }))
                     },
                     // all attributes which is not geometry
                     filter: a => a.attribute_type.indexOf("gml:") ==
@@ -222,17 +213,24 @@ class Styler extends Component {
                 props: {
                     onChange: (styleObj) => this.setState({ styleObj }),
                     onComplete: () => {
-                        const savingerror="Error Saving Style step back and try again" 
+                        const savingerror =
+                            "Error Saving Style step back and try again"
                         this.updateConfig({})
                         StylesManager.saveStyle(styleObj, config)
                             .then((response) => {
                                 if (response.status >= 400) {
-                                    this.setState({ error: true, errorMessage:savingerror  })
+                                    this.setState({
+                                        error: true,
+                                        errorMessage: savingerror
+                                    })
                                 } else {
                                     this.setState({ saved: true })
                                 }
                             }).catch(() => {
-                                this.setState({ error: true, errorMessage: savingerror })
+                                this.setState({
+                                    error: true,
+                                    errorMessage: savingerror
+                                })
                             })
                     },
                     onPrevious: () => {
@@ -253,14 +251,15 @@ class Styler extends Component {
             <div className="col-md-12">
                 {this.helpModal()}
                 <div className="row">{this.navBar()}</div>
-                <ErrorModal open={error} error={errorMessage} onRequestClose={()=> this.setState({error:false})} />
-                 <div className="row">
+                <hr/>
+                <ErrorModal open={error} error={errorMessage} onRequestClose={() => this.setState({ error: false })} />
+                <div className="row">
                     <Navigator steps={steps} step={step} onStepSelected={(step) => this.goToStep(step)} />
                     <div className="col-md-9">
                         {steps.map((s, index) => index == step && <s.component {...s.props} config={config} styleObj={styleObj} />)}
                     </div>
                 </div>
-                
+
             </div>
         )
     }

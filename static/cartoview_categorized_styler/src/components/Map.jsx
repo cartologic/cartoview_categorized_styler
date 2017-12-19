@@ -69,7 +69,7 @@ export default class Map extends React.Component {
           }
         </div>
 
-        <div>
+        <div className="flex-element preview-actions">
           <a className="btn btn-success" href={"/layers/" + layerName}>{"Layer Details"}</a>
           <a className="btn btn-info" href={"/gs/"+layerName+"/style/manage"}>{"Manage Styles"}</a>
         </div>
