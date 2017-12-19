@@ -71,13 +71,17 @@ export default class LayersList extends Component {
     }
     renderPagination() {
         let { totalCount, limit } = this.state
+        const pageCount=Math.ceil(totalCount / limit)
+        if(pageCount==1){
+            return null
+        }
         return (
             <ReactPaginate
                 previousLabel={"previous"}
                 nextLabel={"next"}
                 breakLabel={< a href="javascript:;" > ...</a>}
                 breakClassName={"break-me"}
-                pageCount={Math.ceil(totalCount / limit)}
+                pageCount={pageCount}
                 marginPagesDisplayed={2}
                 pageRangeDisplayed={5}
                 onPageChange={this.handlePageClick}
