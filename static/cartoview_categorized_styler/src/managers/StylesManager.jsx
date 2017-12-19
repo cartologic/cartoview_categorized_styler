@@ -102,19 +102,41 @@ class StylesManager {
             const size = res.features.length;
             res.features.slice( 0, MAX_SIZE ).forEach( ( f, index ) => {
                 const { value } = f.properties;
-                const rule = new OpenLayers.Rule( {
-                    symbolizers: [ this._getSymbolizer(
-                        config, index,
-                        size, MAX_SIZE ) ],
-                    title: value,
-                    filter: new OpenLayers.Filter.Comparison( {
-                        type: OpenLayers.Filter
-                            .Comparison.EQUAL_TO,
-                        property: attribute,
-                        value
-                    } )
-                } );
-                rules.push( rule );
+                const attFilter=new OpenLayers.Filter.Comparison( {
+                    type: OpenLayers.Filter
+                        .Comparison.EQUAL_TO,
+                    property: attribute,
+                    value
+                } )
+                var filter_null = new OpenLayers.Filter.Comparison({
+                    type: OpenLayers.Filter.Comparison.IS_NULL,
+                    property: attribute
+                });
+                
+                var parent_filter = new OpenLayers.Filter.Logical({
+                    type: OpenLayers.Filter.Logical.OR,
+                    filters: [attFilter, filter_null]
+                });
+                if(typeof(value)==="undefined"){
+                    const rule = new OpenLayers.Rule( {
+                        symbolizers: [ this._getSymbolizer(
+                            config, index,
+                            size, MAX_SIZE ) ],
+                        title: value,
+                        filter: filter_null
+                    } );
+                    rules.push( rule );
+                }else{
+                    
+                    const rule = new OpenLayers.Rule( {
+                        symbolizers: [ this._getSymbolizer(
+                            config, index,
+                            size, MAX_SIZE ) ],
+                        title: value,
+                        filter: attFilter
+                    } );
+                    rules.push( rule );
+                }
             } );
             if ( size > MAX_SIZE ) {
                 const rule = new OpenLayers.Rule( {

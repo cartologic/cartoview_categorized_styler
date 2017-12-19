@@ -8,7 +8,8 @@ class Rule extends Component {
     
     getRuleTitle=()=>{
         const {rule}=this.props
-        let title= typeof(rule.title)==="undefined" || !rule.title ? "No Category": rule.title
+        console.log(rule.title)
+        let title= typeof(rule.title)==="undefined" || rule.title===null ? "No Value(null)": rule.title===""? "Empty" : rule.title
         return title
     }
     render() {
