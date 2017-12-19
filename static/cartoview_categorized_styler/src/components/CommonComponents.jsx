@@ -40,7 +40,7 @@ export const ErrorModal=(props)=> {
                     <div className="panel-heading">
                         <div className="row">
                             <div className="col-xs-6 col-md-6">
-                                <h1>Error</h1>
+                                <h3>Error</h3>
                             </div>
                             <div className="col-xs-1 col-md-1 col-md-offset-5 col-xs-offset-5">
                                 <div className="pull-right">
@@ -55,7 +55,7 @@ export const ErrorModal=(props)=> {
                     <div className="panel-body">
                         <div className="row">
                             <div className="col-md-12 text-center text-danger">
-                                <h3>{error}</h3>
+                                <p>{error}</p>
                             </div>
                         </div>
                     </div>

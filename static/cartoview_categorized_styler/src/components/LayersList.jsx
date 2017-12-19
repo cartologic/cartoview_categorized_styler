@@ -232,7 +232,7 @@ export default class LayersList extends Component {
 
                 <div className="row">
                     <div className="col-xs-6 col-xs-offset-4 col-md-6 col-md-offset-3 text-center">
-                        {!this.state.selectedLayer && this.renderPagination()}
+                        {this.renderPagination()}
                     </div>
                 </div>
             </div>

@@ -222,16 +222,17 @@ class Styler extends Component {
                 props: {
                     onChange: (styleObj) => this.setState({ styleObj }),
                     onComplete: () => {
+                        const savingerror="Error Saving Style step back and try again" 
                         this.updateConfig({})
                         StylesManager.saveStyle(styleObj, config)
                             .then((response) => {
                                 if (response.status >= 400) {
-                                    this.setState({ error: true, errorMessage: "Error Saving Style" })
+                                    this.setState({ error: true, errorMessage:savingerror  })
                                 } else {
                                     this.setState({ saved: true })
                                 }
                             }).catch(() => {
-                                this.setState({ error: true, errorMessage: "Error Saving Style" })
+                                this.setState({ error: true, errorMessage: savingerror })
                             })
                     },
                     onPrevious: () => {
