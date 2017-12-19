@@ -1,10 +1,8 @@
-import { Component } from 'react'
-
-
+import React, { Component } from 'react';
 export default class AboutPage extends Component {
-  render(){
-    return(
-      <div>
+    render() {
+        return (
+            <div>
         <div className="panel panel-default">
           <div className="panel-heading">
             <div className="panel-title">
@@ -24,6 +22,6 @@ export default class AboutPage extends Component {
           </div>
         </div>
       </div>
-    )
-  }
+        )
+    }
 }

@@ -1,14 +1,8 @@
 import "../css/styler.css"
 
 import {
-    BY_VALUE,
     DEFAULTS,
-    DEFAULT_COLOR,
-    DEFAULT_NUM_OF_CLASSES,
-    DEFAULT_PALETTE,
     DefaultModalStyle,
-    MAX_SIZE,
-    SOLID,
     UNIQUE_VALUES
 } from './constants/constants.jsx'
 import React, { Component } from 'react'
@@ -21,16 +15,16 @@ import LayersList from './components/LayersList.jsx'
 import Map from './components/Map.jsx'
 import Modal from 'react-modal'
 import Navigator from './components/Navigator.jsx'
-import ReactDOM from 'react-dom'
+import PropTypes from 'prop-types'
 import StylesManager from "./managers/StylesManager.jsx"
 import WMSClient from './gs-client/WMSClient.jsx'
 import WPSClient from './gs-client/WPSClient.jsx'
 
 class Styler extends Component {
-    constructor(props) {
-        super(props)
+    constructor( props ) {
+        super( props )
         this.state = {
-            config: Object.assign({}, DEFAULTS),
+            config: Object.assign( {}, DEFAULTS ),
             step: 0,
             currentLayer: null,
             saved: false,
@@ -38,14 +32,11 @@ class Styler extends Component {
             modalIsOpen: false
         }
     }
-
     aboutHeader() {
-        return (
-            <h3>Categorized Thematic Styler</h3>
-        )
+        return ( <h3>Categorized Thematic Styler</h3> )
     }
-
-    aboutBody() {
+    aboutBody=()=> {
+        const {urls}=this.props
         return (
             <div>
                 <p>
@@ -55,7 +46,7 @@ class Styler extends Component {
 
                 <div className="row">
                     <div className='col-xs-12 col-md-10 col-md-offset-1'>
-                        <img className='img-responsive' src={`/static/${APP_NAME}/images/worldwide categorized thematic map.jpg`} alt="" />
+                        <img className='img-responsive' src={`${urls.appStatic}/images/categorized_thematic_map.jpg`} alt="" />
                     </div>
                 </div>
                 <p>
@@ -64,7 +55,6 @@ class Styler extends Component {
             </div>
         )
     }
-
     helpModal() {
         return (
             <Modal className="modal-dialog" isOpen={this.state.modalIsOpen} style={DefaultModalStyle} onRequestClose={() => {
@@ -99,7 +89,6 @@ class Styler extends Component {
             </Modal>
         )
     }
-
     navBar() {
         return (
             <nav className="navbar navbar-default">
@@ -126,61 +115,76 @@ class Styler extends Component {
     }
     render() {
         var { config, styleObj, step, saved } = this.state
+        const {username,urls}=this.props
         const steps = [
             {
                 label: "Select Layer",
                 component: LayersList,
                 props: {
-                    onComplete: (layer) => {
-                        this.setState({ currentLayer: layer })
-                        this.updateConfig({ layerName: layer.typename })
+                    onComplete: ( layer ) => {
+                        this.setState( { currentLayer: layer } )
+                        this.updateConfig( { layerName: layer.typename } )
                     },
                     layerType: "",
+                    username,
+                    urls,
                     currentLayer: this.state.currentLayer
                 }
             }, {
                 label: "Set new style name",
                 component: LayerStyles,
                 props: {
-                    onComplete: (newConfig) => {
-                        this.updateConfig(newConfig)
+                    onComplete: ( newConfig ) => {
+                        this.updateConfig( newConfig )
                         const { config } = this.state
                         const { layerName, styleName } = config
-                        StylesManager.getStyle(layerName, styleName, newConfig.title).then(styleObj => {
-                            config.styleName = styleObj.name
-                            this.setState({ styleObj, config })
-                        })
+                        StylesManager.getStyle( layerName,
+                            styleName, newConfig.title ).then(
+                            styleObj => {
+                                config.styleName = styleObj.name
+                                this.setState( {
+                                    styleObj,
+                                    config
+                                } )
+                            } )
                     },
-
-                    onPrevious: () => this.setState({
+                    onPrevious: () => this.setState( {
                         step: this.state.step -= 1
-                    }),
-                    styleTitle: this.state.config
-                        ? this.state.config.title
-                        : undefined
+                    } ),
+                    styleTitle: this.state.config ? this.state.config.title : undefined
                 }
             }, {
                 label: "Select Attribute",
                 component: AttributeSelector,
                 props: {
-                    onComplete: (attribute, index) => {
-                        this.updateConfig({ attribute, selectedAttrIndex: index })
+                    onComplete: ( attribute, index ) => {
+                        this.updateConfig( {
+                            attribute,
+                            selectedAttrIndex: index
+                        } )
                         const { layerName } = this.state.config
-                        WPSClient.gsUnique(layerName, attribute).then(res => {
-                            WMSClient.getLayerType(layerName).then(layerType => this.updateConfig({
-                                attribute,
-                                layerType,
-                                numOfClasses: Math.min(res.features.length, 11)
-                            }, true))
-                        })
+                        WPSClient.gsUnique( layerName, attribute )
+                            .then( res => {
+                                WMSClient.getLayerType(
+                                    layerName ).then(
+                                    layerType => this.updateConfig( {
+                                        attribute,
+                                        layerType,
+                                        numOfClasses: Math
+                                            .min( res.features
+                                                .length,
+                                                11 )
+                                    }, true ) )
+                            } )
                     },
                     // all attributes which is not geometry
-                    filter: a => a.attribute_type.indexOf("gml:") == -1,
+                    filter: a => a.attribute_type.indexOf( "gml:" ) ==
+                        -1,
                     tip: "String attributes only are only available for this step",
                     onPrevious: () => {
-                        this.setState({
+                        this.setState( {
                             step: this.state.step -= 1
-                        })
+                        } )
                     },
                     attribute: this.state.config.attribute,
                     index: this.state.config.selectedAttrIndex
@@ -191,40 +195,45 @@ class Styler extends Component {
                 props: {
                     type: UNIQUE_VALUES,
                     onComplete: () => {
-                        StylesManager.createUniqueRules(styleObj, config).then((styleObj) => {
+                        StylesManager.createUniqueRules( styleObj,
+                            config ).then( ( styleObj ) => {
                             step++
-                            this.setState({ styleObj, step })
-                        })
+                            this.setState( {
+                                styleObj,
+                                step
+                            } )
+                        } )
                     },
-                    onChange: (newConfig) => this.updateConfig(newConfig, true),
+                    onChange: ( newConfig ) => this.updateConfig(
+                        newConfig, true ),
                     onPrevious: () => {
-                        this.setState({
+                        this.setState( {
                             step: this.state.step -= 1
-                        })
+                        } )
                     }
                 }
             }, {
                 label: "Customize Style",
                 component: CustomStyle,
                 props: {
-                    onChange: (styleObj) => this.setState({ styleObj }),
+                    onChange: ( styleObj ) => this.setState( { styleObj } ),
                     onComplete: () => {
-                        this.updateConfig({})
-                        StylesManager.saveStyle(styleObj, config).then((response) => {
-                            if (response.status >= 400) {
-                                this.setState({ error: true })
-                            } else {
-                                this.setState({ saved: true })
-                            }
-
-                        }).catch(() => {
-                            this.setState({ error: true })
-                        })
+                        this.updateConfig( {} )
+                        StylesManager.saveStyle( styleObj, config )
+                            .then( ( response ) => {
+                                if ( response.status >= 400 ) {
+                                    this.setState( { error: true } )
+                                } else {
+                                    this.setState( { saved: true } )
+                                }
+                            } ).catch( () => {
+                                this.setState( { error: true } )
+                            } )
                     },
                     onPrevious: () => {
-                        this.setState({
+                        this.setState( {
                             step: this.state.step -= 1
-                        })
+                        } )
                     }
                 }
             }, {
@@ -235,7 +244,6 @@ class Styler extends Component {
                 }
             }
         ]
-
         return (
             <div className="col-md-12">
                 {this.helpModal()}
@@ -252,21 +260,19 @@ class Styler extends Component {
             </div>
         )
     }
-
-    updateConfig(newConfig, sameStep) {
+    updateConfig( newConfig, sameStep ) {
         var { config, step } = this.state
-        Object.assign(config, newConfig)
-        if (!sameStep)
-            step++
+        Object.assign( config, newConfig )
+        if ( !sameStep ) step++
         const saved = false
-        this.setState({ config, step, saved })
+        this.setState( { config, step, saved } )
     }
-    goToStep(step) {
-        this.setState({ step })
+    goToStep( step ) {
+        this.setState( { step } )
     }
 }
-
-global.Styler = Styler
-global.React = React
-global.ReactDOM = ReactDOM
+Styler.propTypes = {
+    username: PropTypes.string.isRequired,
+    urls: PropTypes.object.isRequired
+}
 export default Styler

@@ -1,16 +1,14 @@
-import {Component} from 'react';
-import {ListGroup, ListGroupItem} from 'reactstrap';
-
+import { ListGroup, ListGroupItem } from 'reactstrap';
+import React, { Component } from 'react';
 class GraduatedMethodSelector extends Component {
-  state = {
-    attrs: [],
-    method: this.props.method || '',
-    index: this.props.index || -1
-  }
-
-  renderHeader() {
-    return (
-      <div className="row">
+    state = {
+        attrs: [],
+        method: this.props.method || '',
+        index: this.props.index || -1
+    }
+    renderHeader() {
+        return (
+            <div className="row">
         <div className="col-xs-5 col-md-4">
           <h4>{'Generate Thematic Styler'}</h4>
         </div>
@@ -30,24 +28,23 @@ class GraduatedMethodSelector extends Component {
           }}>{"<< Previous"}</button>
         </div>
       </div>
-    )
-  }
-
-  render() {
-    const {onComplete} = this.props;
-    const methods = [
-      {
-        label: 'Equal Interval',
-        value: 'EQUAL_INTERVAL'
+        )
+    }
+    render() {
+        const { onComplete } = this.props;
+        const methods = [
+            {
+                label: 'Equal Interval',
+                value: 'EQUAL_INTERVAL'
       }, {
-        label: 'Quantile',
-        value: 'QUANTILE'
+                label: 'Quantile',
+                value: 'QUANTILE'
       }, {
-        label: 'Natural Breaks (Jenks)',
-        value: 'NATURAL_BREAKS'
+                label: 'Natural Breaks (Jenks)',
+                value: 'NATURAL_BREAKS'
       }
     ];
-    return <div>
+        return <div>
       {this.renderHeader()}
       <ListGroup>
         {methods.map((m, i) => <ListGroupItem tag="a" href="#" onClick={() => this.setState({method: m.value, index: i})} style={this.state.index == i
@@ -66,6 +63,6 @@ class GraduatedMethodSelector extends Component {
         </ListGroupItem>)}
       </ListGroup>
     </div>;
-  }
+    }
 }
 export default GraduatedMethodSelector;

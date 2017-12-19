@@ -20,7 +20,7 @@ const plugins = [
 ]
 const config = {
     entry: {
-        CategoriezedStyler: path.join( APP_DIR, 'categorized-styler.jsx' ),
+        CategoriezedStyler: path.join( APP_DIR, 'StylerViewer.jsx' ),
     },
     output: {
         path: BUILD_DIR,

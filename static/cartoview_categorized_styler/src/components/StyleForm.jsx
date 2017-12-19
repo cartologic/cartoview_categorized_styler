@@ -1,22 +1,19 @@
-import { Component } from 'react';
+import React, { Component } from 'react'
+
+import Classifier from "./Classifier/Classifier.jsx"
 import { Link } from 'react-router-dom'
-import StylesManager from "../managers/StylesManager.jsx";
-import WMSClient from "../gs-client/WMSClient.jsx";
-import Rules from "./Rules.jsx";
-import Classifier from "./Classifier/Classifier.jsx";
-import BusyIndicator from './BusyIndicator.jsx';
-import Symbolizer from './Symbolizer/Symbolizer.jsx';
+import StylesManager from "../managers/StylesManager.jsx"
 
 class StyleForm extends Component {
-  state = {}
-  render(){
-    var {styleObj} = this.state;
-    if(styleObj == null){
-      return <div className="loading"></div>;
-    }
-    const {match} = this.props;
-    const style = styleObj.namedLayers[styleObj.name].userStyles[0];
-    return <div className="row">
+    state = {}
+    render() {
+        var { styleObj } = this.state
+        if ( styleObj == null ) {
+            return <div className="loading"></div>
+        }
+        const { match } = this.props
+        const style = styleObj.namedLayers[ styleObj.name ].userStyles[ 0 ]
+        return <div className="row">
       <div className="col-md-6">
         <div className="form-group">
           <label>Title</label>
@@ -36,15 +33,16 @@ class StyleForm extends Component {
         </div>
       </div>
     </div>
-  }
-  updateConfig(newConfig){
-    var {styleObj} = this.state;
-    StylesManager.updateStyleConfig(styleObj, newConfig);
-    this.setState({styleObj})
-  }
-  componentDidMount(){
-    const {styleName, layerName} = this.props.match.params;
-    StylesManager.getStyle(layerName, styleName).then(styleObj => this.setState({styleObj}))
-  }
+    }
+    updateConfig( newConfig ) {
+        var { styleObj } = this.state
+        StylesManager.updateStyleConfig( styleObj, newConfig )
+        this.setState( { styleObj } )
+    }
+    componentDidMount() {
+        const { styleName, layerName } = this.props.match.params
+        StylesManager.getStyle( layerName, styleName ).then( styleObj =>
+            this.setState( { styleObj } ) )
+    }
 }
-export default StyleForm;
+export default StyleForm

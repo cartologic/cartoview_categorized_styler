@@ -1,16 +1,13 @@
-import {Component} from 'react';
-import {ListGroup, ListGroupItem} from 'reactstrap';
-
+import React, { Component } from 'react';
 class NumOfClassesSelector extends Component {
-  state = {
-    attrs: [],
-    numOfClasses: this.props.numOfClasses || undefined,
-    index: this.props.index || -1
-  }
-
-  renderHeader() {
-    return (
-      <div className="row">
+    state = {
+        attrs: [],
+        numOfClasses: this.props.numOfClasses || undefined,
+        index: this.props.index || -1
+    }
+    renderHeader() {
+        return (
+            <div className="row">
         <div className="col-xs-5 col-md-4">
           <h4>{'Generate Thematic Styler'}</h4>
         </div>
@@ -30,20 +27,12 @@ class NumOfClassesSelector extends Component {
           }}>{"<< Previous"}</button>
         </div>
       </div>
-    )
-  }
-
-  render() {
-    const {onComplete} = this.props;
-    const classes = [
-      2,
-      3,
-      4,
-      5,
-      6,
-      7
-    ];
-    return <div>
+        )
+    }
+    render() {
+        const { onComplete } = this.props;
+        const classes = [ 2, 3, 4, 5, 6, 7 ];
+        return <div>
       {this.renderHeader()}
       <ul className={'list-group'}>
         {classes.map((c, i) => <li className={'list-group-item'} onClick={() => this.setState({numOfClasses: c, index: c})} style={this.state.index == c
@@ -63,6 +52,6 @@ class NumOfClassesSelector extends Component {
 }
       </ul>
     </div>;
-  }
+    }
 }
 export default NumOfClassesSelector;

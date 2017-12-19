@@ -1,8 +1,8 @@
-import { Component } from 'react';
+import React,{ Component } from 'react';
+
 import AttributeSelector from './AttributeSelector.jsx';
 import MethodSelector from './MethodSelector.jsx';
 import NumOfClassesInput from './NumOfClassesInput.jsx';
-import WPSClient from '../../gs-client/WPSClient.jsx'
 
 class Classifier extends Component {
   state = {}

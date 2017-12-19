@@ -18,7 +18,10 @@ body.edit-mode {
     margin-bottom: 8px;
     cursor: pointer
 }
-
+.center-div{
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
 .li-attribute-selected {
     box-shadow: 0px 0px 10px 5px steelblue;
 }
