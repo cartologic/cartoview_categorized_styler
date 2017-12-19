@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+
+import ReactDOM from 'react-dom'
 class LineLegendItem extends Component {
     render() {
         const { symbolizer } = this.props;

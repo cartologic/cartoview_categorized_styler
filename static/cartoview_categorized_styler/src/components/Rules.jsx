@@ -5,12 +5,18 @@ import LegendItem from "./Legend/LegendItem.jsx";
 
 class Rule extends Component {
     state = { editing: false }
+    
+    getRuleTitle=()=>{
+        const {rule}=this.props
+        let title= typeof(rule.title)==="undefined" || !rule.title ? "No Category": rule.title
+        return title
+    }
     render() {
-        const { rule, onClick } = this.props;
-        const { editing } = this.state;
+        const { rule, onClick } = this.props
+        const { editing } = this.state
         return <ListGroupItem key={rule.id} tag="a"  action onClick={e => onClick(rule)}>
       {rule.symbolizers.map(s => <LegendItem symbolizer={s}/>)}
-      {rule.title}
+      {this.getRuleTitle()}
     </ListGroupItem>
     }
     onTitleChange( e ) {

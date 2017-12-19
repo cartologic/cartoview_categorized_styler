@@ -1,3 +1,5 @@
+import {DefaultModalStyle} from '../constants/constants.jsx'
+import Modal from 'react-modal'
 import PropTypes from 'prop-types'
 import React from 'react'
 export const Loader = (props) => {
@@ -28,4 +30,42 @@ export const PreviousButton = (props) => {
 PreviousButton.propTypes = {
     clickAction: PropTypes.func.isRequired,
     disabled: PropTypes.bool.isRequired
+}
+export const ErrorModal=(props)=> {
+    const {open,onRequestClose,error}=props
+    return (
+        <Modal className="modal-dialog" isOpen={open} style={DefaultModalStyle} onRequestClose={onRequestClose}>
+            <div className="">
+                <div className="panel panel-default">
+                    <div className="panel-heading">
+                        <div className="row">
+                            <div className="col-xs-6 col-md-6">
+                                <h1>Error</h1>
+                            </div>
+                            <div className="col-xs-1 col-md-1 col-md-offset-5 col-xs-offset-5">
+                                <div className="pull-right">
+                                    <a className="btn btn btn-primary" onClick={(e) => {
+                                        e.preventDefault()
+                                        onRequestClose()
+                                    }}><i className="fa fa-times" aria-hidden="true"></i>                                        </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="panel-body">
+                        <div className="row">
+                            <div className="col-md-12 text-center text-danger">
+                                <h3>{error}</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </Modal>
+    )
+}
+ErrorModal.propTypes={
+    error:PropTypes.string.isRequired,
+    onRequestClose:PropTypes.func.isRequired,
+    open:PropTypes.bool.isRequired
 }

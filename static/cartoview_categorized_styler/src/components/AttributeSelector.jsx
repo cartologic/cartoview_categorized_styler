@@ -63,8 +63,6 @@ export default class AttributeSelector extends Component {
               ({a.attribute_type})
             </li>)}
         </ul>
-
-        {this.tip()}
       </div>
         )
     }

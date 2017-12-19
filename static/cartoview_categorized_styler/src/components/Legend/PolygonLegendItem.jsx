@@ -1,4 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+
+import ReactDOM from 'react-dom'
+
 class PolygonLegendItem extends Component {
     render() {
         const { symbolizer } = this.props;

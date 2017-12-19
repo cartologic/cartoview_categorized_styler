@@ -37,7 +37,7 @@ const DefaultModalStyle = {
         outline: 'none',
         // width: "80%",
         height: '700px',
-        overflow: 'scroll',
+        overflow: 'hidden',
         // margin: 'auto',
     }
 }
