@@ -22,10 +22,10 @@ import WMSClient from './gs-client/WMSClient.jsx'
 import WPSClient from './gs-client/WPSClient.jsx'
 
 class Styler extends Component {
-    constructor(props) {
-        super(props)
+    constructor( props ) {
+        super( props )
         this.state = {
-            config: Object.assign({}, DEFAULTS),
+            config: Object.assign( {}, DEFAULTS ),
             step: 0,
             currentLayer: null,
             saved: false,
@@ -35,7 +35,7 @@ class Styler extends Component {
         }
     }
     aboutHeader() {
-        return (<h3>Categorized Thematic Styler</h3>)
+        return ( <h3>Categorized Thematic Styler</h3> )
     }
     aboutBody = () => {
         const { urls } = this.props
@@ -106,80 +106,80 @@ class Styler extends Component {
         )
     }
     render() {
-        var { config, styleObj, step, saved, errorMessage, error } = this.state
+        var { config, styleObj, step, saved, errorMessage, error,currentLayer } = this.state
         const { username, urls } = this.props
         const steps = [
             {
                 label: "Select Layer",
                 component: LayersList,
                 props: {
-                    onComplete: (layer) => {
-                        this.setState({ currentLayer: layer })
-                        this.updateConfig({ layerName: layer.typename })
+                    onComplete: ( layer ) => {
+                        this.setState( { currentLayer: layer } )
+                        this.updateConfig( { layerName: layer.typename } )
                     },
                     layerType: "",
                     username,
                     urls,
-                    currentLayer: this.state.currentLayer
+                    currentLayer
                 }
             }, {
                 label: "Set new style name",
                 component: LayerStyles,
                 props: {
-                    onComplete: (newConfig) => {
-                        this.updateConfig(newConfig)
+                    onComplete: ( newConfig ) => {
+                        this.updateConfig( newConfig )
                         const { config } = this.state
                         const { layerName, styleName } = config
-                        StylesManager.getStyle(layerName,
-                            styleName, newConfig.title).then(
+                        StylesManager.getStyle( layerName,
+                            styleName, newConfig.title ).then(
                             styleObj => {
                                 config.styleName = styleObj.name
-                                this.setState({
+                                this.setState( {
                                     styleObj,
                                     config
-                                })
-                            })
+                                } )
+                            } )
                     },
-                    onPrevious: () => this.setState({
-                        step: this.state.step -= 1
-                    }),
+                    onPrevious: () => this.setState( {
+                        step: this.state.step - 1
+                    } ),
                     styleTitle: this.state.config ? this.state.config.title : undefined
                 }
             }, {
                 label: "Select Attribute",
                 component: AttributeSelector,
                 props: {
-                    onComplete: (attribute, index) => {
-                        this.updateConfig({
+                    onComplete: ( attribute, index ) => {
+                        this.updateConfig( {
                             attribute,
                             selectedAttrIndex: index
-                        })
+                        } )
                         const { layerName } = this.state.config
-                        WPSClient.gsUnique(layerName, attribute)
-                            .then(res => {
+                        WPSClient.gsUnique( layerName, attribute )
+                            .then( res => {
                                 WMSClient.getLayerType(
-                                    layerName).then(
-                                    layerType => this.updateConfig({
+                                    layerName ).then(
+                                    layerType => this.updateConfig( {
                                         attribute,
                                         layerType,
                                         numOfClasses: Math
-                                            .min(res.features
+                                            .min( res.features
                                                 .length,
-                                            11)
-                                    }, true))
-                            }).catch(err => this.setState({
+                                                11 )
+                                    }, true ) )
+                            } ).catch( err => this.setState( {
                                 error: true,
                                 errorMessage: "it seems that this attribute has no values please go back and select another one"
-                            }))
+                            } ) )
                     },
                     // all attributes which is not geometry
-                    filter: a => a.attribute_type.indexOf("gml:") ==
+                    filter: a => a.attribute_type.indexOf( "gml:" ) ==
                         -1,
                     tip: "String attributes only are only available for this step",
                     onPrevious: () => {
-                        this.setState({
-                            step: this.state.step -= 1
-                        })
+                        this.setState( {
+                            step: this.state.step - 1
+                        } )
                     },
                     attribute: this.state.config.attribute,
                     index: this.state.config.selectedAttrIndex
@@ -190,53 +190,53 @@ class Styler extends Component {
                 props: {
                     type: UNIQUE_VALUES,
                     onComplete: () => {
-                        StylesManager.createUniqueRules(styleObj,
-                            config).then((styleObj) => {
-                                step++
-                                this.setState({
-                                    styleObj,
-                                    step
-                                })
-                            })
+                        StylesManager.createUniqueRules( styleObj,
+                            config ).then( ( styleObj ) => {
+                            step++
+                            this.setState( {
+                                styleObj,
+                                step
+                            } )
+                        } )
                     },
-                    onChange: (newConfig) => this.updateConfig(
-                        newConfig, true),
+                    onChange: ( newConfig ) => this.updateConfig(
+                        newConfig, true ),
                     onPrevious: () => {
-                        this.setState({
-                            step: this.state.step -= 1
-                        })
+                        this.setState( {
+                            step: this.state.step - 1
+                        } )
                     }
                 }
             }, {
                 label: "Customize Style",
                 component: CustomStyle,
                 props: {
-                    onChange: (styleObj) => this.setState({ styleObj }),
+                    onChange: ( styleObj ) => this.setState( { styleObj } ),
                     onComplete: () => {
                         const savingerror =
                             "Error Saving Style step back and try again"
-                        this.updateConfig({})
-                        StylesManager.saveStyle(styleObj, config)
-                            .then((response) => {
-                                if (response.status >= 400) {
-                                    this.setState({
+                        this.updateConfig( {} )
+                        StylesManager.saveStyle( styleObj, config )
+                            .then( ( response ) => {
+                                if ( response.status >= 400 ) {
+                                    this.setState( {
                                         error: true,
                                         errorMessage: savingerror
-                                    })
+                                    } )
                                 } else {
-                                    this.setState({ saved: true })
+                                    this.setState( { saved: true } )
                                 }
-                            }).catch(() => {
-                                this.setState({
+                            } ).catch( () => {
+                                this.setState( {
                                     error: true,
                                     errorMessage: savingerror
-                                })
-                            })
+                                } )
+                            } )
                     },
                     onPrevious: () => {
-                        this.setState({
-                            step: this.state.step -= 1
-                        })
+                        this.setState( {
+                            step: this.state.step - 1
+                        } )
                     }
                 }
             }, {
@@ -252,6 +252,12 @@ class Styler extends Component {
                 {this.helpModal()}
                 <div className="row">{this.navBar()}</div>
                 <hr/>
+                <div className="flex-element styler-nav current-info">
+                    {currentLayer && <a target="_blank" href={`${currentLayer.detail_url}`}>{`Layer: ${currentLayer.title}`}</a>}
+                    {config&& config.title && <span>{`Style Name: ${config.title}`}</span>}
+                    {config&& config.attribute && <span>{`Attribute: ${config.attribute}`}</span>}
+                </div>
+                {(currentLayer || config.title) && <hr/>}
                 <ErrorModal open={error} error={errorMessage} onRequestClose={() => this.setState({ error: false })} />
                 <div className="row">
                     <Navigator steps={steps} step={step} onStepSelected={(step) => this.goToStep(step)} />
@@ -263,15 +269,15 @@ class Styler extends Component {
             </div>
         )
     }
-    updateConfig(newConfig, sameStep) {
+    updateConfig( newConfig, sameStep ) {
         var { config, step } = this.state
-        Object.assign(config, newConfig)
-        if (!sameStep) step++
-        const saved = false
-        this.setState({ config, step, saved })
+        Object.assign( config, newConfig )
+        if ( !sameStep ) step++
+            const saved = false
+        this.setState( { config, step, saved } )
     }
-    goToStep(step) {
-        this.setState({ step })
+    goToStep( step ) {
+        this.setState( { step } )
     }
 }
 Styler.propTypes = {

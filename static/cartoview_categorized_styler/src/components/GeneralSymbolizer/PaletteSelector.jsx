@@ -1,21 +1,19 @@
 import React, { Component } from 'react'
 
 import CartoColor from 'cartocolor'
-
-const preview = (colors) => colors.map((c, index) => <span key={index} className="palette-item" style={{ backgroundColor: c }}></span>);
-
-
+import PropTypes from 'prop-types'
+const preview = ( colors ) => colors.map( ( c, index ) =>
+    <span key={index} className="palette-item" style={{ backgroundColor: c }}></span>
+)
 export default class PaletteSelector extends Component {
     render() {
-        const { symbolizer, property } = this.props;
-        var count = symbolizer.numOfClasses.toString();
-        const palette = symbolizer[property + "Color"]
-
-        const onChange = (palette) => {
-            symbolizer[property + "Color"] = palette
-            this.props.onChange(symbolizer);
+        const { symbolizer, property } = this.props
+        var count = symbolizer.numOfClasses.toString()
+        const palette = symbolizer[ property + "Color" ]
+        const onChange = ( palette ) => {
+            symbolizer[ property + "Color" ] = palette
+            this.props.onChange( symbolizer )
         }
-
         return (
             <div className="dropdown">
                 <button className="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -29,11 +27,16 @@ export default class PaletteSelector extends Component {
                                     {key == palette && <span className="palette-item fa fa-caret-right"></span>}
                                     {preview(CartoColor[key][count])}
                                 </li>
-                            return null;
+                            return null
                         })
                     }
                 </ul>
             </div>
         )
     }
+}
+PaletteSelector.propTypes = {
+    symbolizer: PropTypes.object.isRequired,
+    property: PropTypes.string.isRequired,
+    onChange: PropTypes.func.isRequired
 }

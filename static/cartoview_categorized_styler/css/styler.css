@@ -58,6 +58,10 @@ body.edit-mode {
 .fill-empty{
     flex-grow: 1
 }
+.current-info{
+    justify-content: space-around;
+    align-items: center;
+}
 .preview-actions{
     padding: 5px;
     justify-content: space-between;
