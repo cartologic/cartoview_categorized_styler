@@ -240,7 +240,7 @@ class Styler extends Component {
                     }
                 }
             }, {
-                label: "Preview",
+                label: "View",
                 component: Map,
                 props: {
                     saved

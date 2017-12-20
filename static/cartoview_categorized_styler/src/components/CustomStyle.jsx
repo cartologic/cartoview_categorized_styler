@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 
 import Rules from "./Rules.jsx";
 import Symbolizer from './Symbolizer/Symbolizer.jsx';
+
 export default class CustomStyle extends Component {
     state = {}
     tip() {
@@ -22,7 +23,7 @@ export default class CustomStyle extends Component {
           <h4>{'Customize Style'}</h4>
         </div>
         <div className="col-xs-7 col-md-8">
-            <NextButton message="Save & Preview" clickAction={() => this.props.onComplete()} />
+            <NextButton message="Save" clickAction={() => this.props.onComplete()} />
             <PreviousButton clickAction={() => this.props.onPrevious()} />
         </div>
       </div>
