@@ -4,7 +4,7 @@ import { Component } from 'react'
 import React from 'react'
 import t from 'tcomb-form'
 
-const alphaNumericRegex = /^[0-9a-zA-Z]+$/
+const alphaNumericRegex = /(^[a-zA-Z][a-zA-Z0-9_]*)|(^[_][a-zA-Z0-9_]+$)/
 const Form = t.form.Form
 const AlphaNumeric = t.refinement(t.String, (n) => {
     if (n.match(alphaNumericRegex)) {
@@ -17,7 +17,7 @@ AlphaNumeric.getValidationErrorMessage = (value) => {
     if (!value) {
         return 'Required'
     } else if (!value.match(alphaNumericRegex)) {
-        return 'Only AlphaNumeric Allowed'
+        return 'Only (AlphaNumeric,_) Allowed and numbers not allowed as prefix'
     }
 }
 

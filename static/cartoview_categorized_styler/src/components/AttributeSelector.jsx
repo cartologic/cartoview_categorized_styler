@@ -48,7 +48,7 @@ export default class AttributeSelector extends Component {
             <h4>{'Select Attribute'}</h4>
           </div>
           <div className="col-xs-7 col-md-8">
-            <NextButton clickAction={() => this.onComplete()} />
+            <NextButton disabled={this.state.selectedAttribute ? false : true} clickAction={() => this.onComplete()} />
             <PreviousButton clickAction={() => this.props.onPrevious()} />
           </div>
         </div>
