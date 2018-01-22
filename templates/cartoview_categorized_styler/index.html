@@ -26,7 +26,8 @@
     geoserver: "{{ GEOSERVER_BASE_URL }}",
     geoserverRestProxy: "proxy/geoserver/rest",
     proxy: PROXY_URL,
-    layersAPI: "{% url 'api_dispatch_list' api_name='stylers-api' resource_name='layers' %}",
+    layersAPI: "/api/layers",
+
     stylesUrl: "{% url 'cartoview_categorized_styler.index' %}styles",
     {% if 'access_token' in request.session %}
         wfsURL : "{{ GEOSERVER_BASE_URL }}wfs?access_token={{request.session.access_token}}",

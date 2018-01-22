@@ -14,6 +14,7 @@ class URLS {
         let params = {
             'limit': limit,
             'offset': offset,
+            'permission':"change_layer_style",
             ...query
         }
         if (userMaps) {
