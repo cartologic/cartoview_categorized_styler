@@ -26,7 +26,7 @@
     geoserver: "{{ GEOSERVER_BASE_URL }}",
     geoserverRestProxy: "proxy/geoserver/rest",
     proxy: PROXY_URL,
-    layersAPI: "/api/layers",
+    layersAPI:"{% url 'api_dispatch_list' api_name='api' resource_name='layers' %}",
 
     stylesUrl: "{% url 'cartoview_categorized_styler.index' %}styles",
     {% if 'access_token' in request.session %}
