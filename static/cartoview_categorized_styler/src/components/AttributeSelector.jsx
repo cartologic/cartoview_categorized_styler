@@ -10,11 +10,18 @@ export default class AttributeSelector extends Component {
         selectedIndex: this.props.index ? this.props.index : -1,
         selectedAttribute: this.props.attribute ? this.props.attribute : ''
     }
+    getLayerAttributes(layerName){
+        WMSClient.getLayerAttributes( layerName ).then( ( attrs ) => {
+            this.setState( {loading: false , attrs } )
+        } )
+    }
     componentDidMount() {
         const { layerName } = this.props.config;
-        WMSClient.getLayerAttributes( layerName ).then( ( attrs ) => {
-            this.setState( { attrs } );
-        } );
+        this.setState({
+            loading: true
+        }, ()=>{
+            this.getLayerAttributes()
+        })
     }
     tip() {
         return (
@@ -33,14 +40,13 @@ export default class AttributeSelector extends Component {
     }
     render() {
         const { attrs } = this.state;
-        if ( attrs.length == 0 ) {
-            return <Loader />
-        }
         const { onComplete, filter } = this.props;
         const isGeom = ( a ) => {
             return a.attribute_type.toLowerCase().indexOf( "gml:" ) ==
                 0;
         }
+        if (this.state.loading) return <Loader />
+
         return (
             <div>
         <div className="row">
