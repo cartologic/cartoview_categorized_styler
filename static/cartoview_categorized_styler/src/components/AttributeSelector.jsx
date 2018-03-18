@@ -12,7 +12,10 @@ export default class AttributeSelector extends Component {
     }
     getLayerAttributes(layerName){
         WMSClient.getLayerAttributes( layerName ).then( ( attrs ) => {
-            this.setState( {loading: false , attrs } )
+            if (attrs && attrs.length > 0)
+                this.setState( {loading: false , attrs } )
+            else
+                this.setState({loading: false, noAttributes: true})
         } )
     }
     componentDidMount() {
@@ -20,7 +23,7 @@ export default class AttributeSelector extends Component {
         this.setState({
             loading: true
         }, ()=>{
-            this.getLayerAttributes()
+            this.getLayerAttributes(layerName)
         })
     }
     tip() {
@@ -38,6 +41,16 @@ export default class AttributeSelector extends Component {
     onComplete() {
         this.props.onComplete( this.state.selectedAttribute, this.state.selectedIndex )
     }
+    renderNoAttributesErrorMessage(){
+        return(
+            <div className="panel panel-danger">
+                <div className="panel-heading">Error:</div>
+                <div className="panel-body">
+                    The selected layer has no attributes !
+                </div>
+            </div>
+        )
+    }
     render() {
         const { attrs } = this.state;
         const { onComplete, filter } = this.props;
@@ -46,6 +59,7 @@ export default class AttributeSelector extends Component {
                 0;
         }
         if (this.state.loading) return <Loader />
+        if (this.state.noAttributes) return this.renderNoAttributesErrorMessage()
 
         return (
             <div>
