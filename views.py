@@ -8,7 +8,7 @@ from geonode.layers.views import _resolve_layer, _PERMISSION_MSG_MODIFY
 from geonode.geoserver.helpers import ogc_server_settings, set_styles
 from django.http import QueryDict
 from geoserver.catalog import Catalog
-
+from django.conf import settings
 
 @login_required
 def index(request):
@@ -50,13 +50,14 @@ def save_style(request, layer_name, style_name):
     style = gs_catalog.get_style(style_name)
     new = style is None
     xml = request.body
-    gs_catalog.create_style(style_name, xml, True)
+    gs_catalog.create_style(style_name, xml, True,workspace=settings.DEFAULT_WORKSPACE)
     if new:
-        style = gs_catalog.get_style(style_name)
+        style = gs_catalog.get_style(style_name,workspace=settings.DEFAULT_WORKSPACE)
         gs_layer = gs_catalog.get_layer(layer_name)
         gs_layer.styles += [style, ]
         gs_catalog.save(gs_layer)
     set_styles(layer, gs_catalog)
+    
     # except:
     #     res["success"] = False
     return HttpResponse(json.dumps(res), content_type="text/json")
