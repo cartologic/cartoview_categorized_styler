@@ -1,4 +1,8 @@
 import { getUrlWithQS } from './utils.jsx'
+import {default as urlsHelper} from '../helpers/URLS' 
+import {getCRSFToken} from '../helpers/helpers.jsx' 
+ 
+const urlsHelperObj = new urlsHelper(URLS) // URLS defined it the template 
 
 const InputBuilder = {
     featureCollection: (identifier, featureType) => {
@@ -43,7 +47,7 @@ const OutputBuilder = (format) => {
 }
 
 class WPSClient {
-    url = URLS.geoserver + "wps"
+    url = urlsHelperObj.getProxiedURL(URLS.wpsURL)
     gsUnique(featureType, attribute) {
         var inputs = {
             featureCollection: { features: featureType },
@@ -90,12 +94,13 @@ class WPSClient {
             dataInputs: dataInputs
         }
         var xml = new OpenLayers.Format.WPSExecute().write(process);
-        return fetch(URLS.geoserver + "wps", {
+        return fetch(this.url, {
             method: "POST",
             credentials: "include",
             body: xml,
             headers: new Headers({
-                "Content-Type": "application/xml"
+                "Content-Type": "application/xml", 
+                "X-CSRFToken": getCRSFToken() 
             })
         });
     }
