@@ -3,7 +3,6 @@
 {% load i18n %} 
 {% block title %} Categorized Styler {% endblock %} 
 {% block head %}
-{% include "geonode/ext_header.html" %} 
 {{ block.super }}
 {% endblock %} 
 {% block body %}
@@ -43,7 +42,8 @@
     media: "{{ MEDIA_URL }}",
     rest: "{% url 'app_manager_base_url' %}rest/app_manager/",
     geonodeRest: "{% url 'api_api_top_level' 'api' %}",
-    appLogo:'{% static '{{APP_NAME}}/logo.png' %}'
+    appLogo:'{% static '{{APP_NAME}}/logo.png' %}',
+    attributesAPI:"{% url 'api_dispatch_list' api_name='api' resource_name='attributes' %}",
   };
   const APP_NAME = "{{APP_NAME}}"
   const username = '{{username}}'
