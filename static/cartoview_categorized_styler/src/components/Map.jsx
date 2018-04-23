@@ -7,7 +7,7 @@ export default class Map extends React.Component {
     super(props);
     const {layerName, styleName} = props.config;
     this.layerSource = new ol.source.ImageWMS({
-      url: URLS.geoserver + "wms",
+      url: URLS.wmsURL, 
       params: {
         LAYERS: layerName,
         STYLES: styleName,
