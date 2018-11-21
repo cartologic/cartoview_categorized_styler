@@ -1,10 +1,9 @@
-from django.conf.urls import patterns, url, include
+from django.conf.urls import url, include
 import views
 from . import APP_NAME
 
 
-
-urlpatterns = patterns('',
+urlpatterns = [
                        url(r'^$', views.index, name='%s.index' % APP_NAME),
                        url(r'^styles/(?P<layername>[^/]*)$',
                            views.layer_styles, name='%s.layer_styles' % APP_NAME),
@@ -12,5 +11,5 @@ urlpatterns = patterns('',
                            views.save_style, name='%s.save_style' % APP_NAME),
                        url(r'^proxy/geoserver/rest/(?P<suburl>.*)$',
                            views.geoserver_rest_proxy, name='%s.proxy' % APP_NAME),
-                      
-                       )
+
+]
