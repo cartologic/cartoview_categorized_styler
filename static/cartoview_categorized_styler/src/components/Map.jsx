@@ -41,7 +41,6 @@ export default class Map extends React.Component {
       }else {
         this.map.getView().fit(ol.proj.transformExtent(extent, srid, "EPSG:3857"));
       }
-      this.map.getView().setZoom(this.map.getView().getZoom() + 1);
     });
   }
 
